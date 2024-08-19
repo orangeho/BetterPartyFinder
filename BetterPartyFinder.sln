@@ -2,8 +2,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterPartyFinder", "BetterPartyFinder\BetterPartyFinder.csproj", "{3692974D-42C1-4590-AB61-3D94D26A0634}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XivCommon", "XivCommon\XivCommon\XivCommon.csproj", "{D54AF7C9-BF9D-4DE8-97C9-52A51DBA45A7}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
