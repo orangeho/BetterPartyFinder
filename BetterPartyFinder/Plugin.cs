@@ -90,12 +90,14 @@ public class Plugin : IDalamudPlugin
     // Used with AddonLifecycle
     public void SetMainUiOpen(AddonEvent _, AddonArgs __)
     {
-        MainWindow.IsOpen = true;
+        if (Config.ShowWhenPfOpen)
+            MainWindow.IsOpen = true;
     }
 
     public void SetMainUiClose(AddonEvent _, AddonArgs __)
     {
-        MainWindow.IsOpen = false;
+        if (Config.ShowWhenPfOpen)
+            MainWindow.IsOpen = false;
     }
     #endregion
 }
