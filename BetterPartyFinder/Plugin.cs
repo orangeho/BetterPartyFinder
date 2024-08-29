@@ -1,5 +1,7 @@
 ﻿using BetterPartyFinder.Windows.Config;
 using BetterPartyFinder.Windows.Main;
+using Dalamud.Game.Addon.Lifecycle;
+using Dalamud.Game.Addon.Lifecycle.AddonArgTypes;
 using Dalamud.Interface.Windowing;
 using Dalamud.IoC;
 using Dalamud.Plugin;
@@ -19,6 +21,7 @@ public class Plugin : IDalamudPlugin
     [PluginService] public static IGameGui GameGui { get; private set; } = null!;
     [PluginService] public static IPartyFinderGui PartyFinderGui { get; private set; } = null!;
     [PluginService] public static IGameInteropProvider GameInteropProvider { get; private set; } = null!;
+    [PluginService] public static IAddonLifecycle AddonLifecycle { get; private set; } = null!;
     [PluginService] public static IPluginLog Log { get; private set; } = null!;
 
     public readonly WindowSystem WindowSystem = new(Name);
@@ -49,9 +52,15 @@ public class Plugin : IDalamudPlugin
 
         // start task to determine maximum item level (based on max chestpiece)
         Util.CalculateMaxItemLevel();
+
+        AddonLifecycle.RegisterListener(AddonEvent.PostSetup, "LookingForGroup", SetMainUiOpen);
+        AddonLifecycle.RegisterListener(AddonEvent.PreFinalize, "LookingForGroup", SetMainUiClose);
     }
 
     public void Dispose() {
+        AddonLifecycle.UnregisterListener(AddonEvent.PostSetup, "LookingForGroup", SetMainUiOpen);
+        AddonLifecycle.UnregisterListener(AddonEvent.PreFinalize, "LookingForGroup", SetMainUiClose);
+
         Interface.UiBuilder.Draw -= DrawUI;
         Interface.UiBuilder.OpenMainUi -= OpenMainUi;
         Interface.UiBuilder.OpenConfigUi -= OpenConfigUi;
@@ -76,6 +85,17 @@ public class Plugin : IDalamudPlugin
     public void OpenConfigUi()
     {
         ConfigWindow.Toggle();
+    }
+
+    // Used with AddonLifecycle
+    public void SetMainUiOpen(AddonEvent _, AddonArgs __)
+    {
+        MainWindow.IsOpen = true;
+    }
+
+    public void SetMainUiClose(AddonEvent _, AddonArgs __)
+    {
+        MainWindow.IsOpen = false;
     }
     #endregion
 }

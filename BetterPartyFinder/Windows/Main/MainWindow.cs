@@ -31,19 +31,13 @@ public unsafe partial class MainWindow : Window, IDisposable
 
     public void Dispose() { }
 
-    public override void PreOpenCheck()
+    public override void PreDraw()
     {
         Addon = null;
-
         var addonPtr = Plugin.GameGui.GetAddonByName("LookingForGroup");
         if (Plugin.Config.ShowWhenPfOpen && addonPtr != IntPtr.Zero)
             Addon = (AtkUnitBase*) addonPtr;
 
-        IsOpen = IsOpen || Addon != null && Addon->IsVisible;
-    }
-
-    public override void PreDraw()
-    {
         IsCollapsed = true;
 
         if (Position.HasValue)

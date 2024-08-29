@@ -32,7 +32,7 @@ public static class Util
 
     internal static IEnumerable<World> WorldsOnDataCentre(IPlayerCharacter character)
     {
-        var dcRow = character.HomeWorld.GameData.DataCenter.Row;
+        var dcRow = character.HomeWorld.GameData!.DataCenter.Row;
         return Plugin.DataManager.GetExcelSheet<World>()!.Where(world => world.IsPublic && world.DataCenter.Row == dcRow);
     }
 }

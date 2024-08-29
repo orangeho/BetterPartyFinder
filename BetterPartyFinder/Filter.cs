@@ -138,6 +138,9 @@ public class Filter : IDisposable
                                 continue;
 
                             var job = possibleJob.ClassJob(Plugin.DataManager);
+                            if (job is null)
+                                continue;
+
                             if (present.Contains((byte) job.RowId))
                                 continue;
 
