@@ -56,6 +56,17 @@ public partial class MainWindow
             Plugin.Config.Save();
         }
 
+        var dutyCompleteWeekRewardUnclaimed = filter[ConditionFlags.DutyCompleteWeeklyRewardUnclaimed];
+        // commented the condition so it assigns the uncheck value even
+        // unchecked = remove all weekly reward unclaimed , checked keep only weekly reward
+        //if (ImGui.Checkbox("Hide Duty Complete (Weekly Reward Unclaimed)", ref dutyCompleteWeekRewardUnclaimed))
+        //{
+        ImGui.Checkbox("Duty Complete (Weekly Reward Unclaimed)", ref dutyCompleteWeekRewardUnclaimed);
+        filter[ConditionFlags.DutyCompleteWeeklyRewardUnclaimed] = dutyCompleteWeekRewardUnclaimed;
+
+        Plugin.Config.Save();
+        //}
+
         ImGui.Separator();
 
         var undersized = filter[DutyFinderSettingsFlags.UndersizedParty];

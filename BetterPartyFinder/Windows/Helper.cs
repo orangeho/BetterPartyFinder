@@ -27,4 +27,32 @@ public static class Helper
 
         return ret;
     }
+
+    internal enum CheckState
+    {
+        Unchecked,
+        Checked,
+        Indeterminate
+    }
+
+    internal static void ThreeStateCheckbox(string label, ref CheckState state)
+    {
+        // Display the label depending on the current state
+        string checkboxLabel = state switch
+        {
+            CheckState.Unchecked => "[ ]",
+            CheckState.Checked => "[X]",
+            CheckState.Indeterminate => "[-]",
+            _ => "[ ]"
+        };
+
+        if (ImGui.Button(checkboxLabel))
+        {
+            // Cycle through the three states
+            state = (CheckState)(((int)state + 1) % 3);
+        }
+
+        ImGui.SameLine();
+        ImGui.Text(label);  // Display the text next to the checkbox
+    }
 }

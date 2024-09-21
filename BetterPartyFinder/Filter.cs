@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Dalamud.Game.Gui.PartyFinder.Types;
+using ImGuiNET;
 
 namespace BetterPartyFinder;
 
@@ -200,10 +201,6 @@ public class Filter : IDisposable
         if (filter.Players.Count > 0)
             if (filter.Players.Any(info => info.Name == listing.Name.TextValue && info.World == listing.HomeWorld.Value.RowId))
                 return false;
-
-        // Filter based on "Weekly Reward Unclaimed" restriction
-        if (listing[ConditionFlags.DutyCompleteWeeklyRewardUnclaimed])
-            return false;
 
         return true;
     }
